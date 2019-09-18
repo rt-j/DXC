@@ -1,0 +1,41 @@
+<html>
+    <head>
+            <script type="text/javascript">
+                function check(){
+                    var uname=document.getElementById("userName").value;
+                    var upass=document.getElementById("password").value;
+                    var span1=document.getElementById("s1")
+                    var span2=document.getElementById("s2")
+                    span1.innerHTML=""
+                    span2.innerHTML=""
+
+                    if(uname.length==0){
+                        
+                        span1.innerHTML="Enter a valid username"
+
+                    }
+                    else{
+                    alert("welcome" +uname)
+                    }
+                    
+                    if((upass.length<6 || upass.length>12) && upass.length==0 && upass.charAt(0)!='A'){
+                        
+                        span2.innerHTML="Enter a valid password"
+                    }
+                    else{
+                        alert("good")
+                    }
+                }
+                </script>
+
+    </head>
+     <body>
+      <form>
+        
+       Username: <input type="text" name="userName" id="userName"/><span id="s1"></span><br/>
+       Password:<input type="password" name="password" id="password"/><span id="s2"></span> <br/>    
+        
+        <input type="button" value="go" onclick="check()">
+      </form>
+     </body>
+    </html>
