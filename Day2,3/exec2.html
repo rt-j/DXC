@@ -1,0 +1,30 @@
+<html>
+
+    <script type="text/javascript">
+       function date()
+       {
+          n1= parseInt(prompt("enter the credit card number"))
+          n2=parseInt(prompt(" bill amount"))
+          var hi= new Date()
+          alert(hi)
+       }
+          function bill(){
+             date();
+             var d = new Date()
+             document.getElementById("demo").innerHTML = d.getDate();
+             
+              if(demo>15){
+                
+                
+                var amount=((30-demo)*50 + n2)
+                alert("amount"+amount)
+              }
+              else{
+                  alert("Bill"+n2)
+              }
+          }
+        
+    </script>
+    <body>
+            <input type ="button" value="Billing" onclick="bill()">
+    </body>

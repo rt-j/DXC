@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script type="text/javascript">
+        
+        //video1 is id name we r using to retrieve first we put var and did not work ,so take out var to make the reference common to all the functions
+        function playrpause(){
+            Myv= document.getElementById("video1")
+             if(Myv.paused){
+                  
+             Myv.play()
+             }
+             else{
+             Myv.pause()
+        }
+        }
+        function Big(){
+             Myv.width=500;
+        }
+        function Small(){
+             Myv.width=200;
+        }
+
+        </script>
+    </head>
+    <body>
+    <div>
+    <video id="video1" width="420" controls>
+    <source src="Goal.mp4" type="video/mp4">
+    </video>
+</div>
+<div>
+    
+    
+        <input type="button" value="play/pause" onclick="playrpause()">
+        <input type="button" value="Big" onclick="Big()">
+        <input type="button" value="Small" onclick="Small()">
+    </div>
+        
+    </body>
+</html>

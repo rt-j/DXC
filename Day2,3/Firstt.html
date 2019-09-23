@@ -1,0 +1,54 @@
+<html>
+ <head>
+   <script type ="text/javascript">
+   function addTwo()
+   {
+       var result = confirm("Do u ")
+       if (result== true){
+   
+  var n1= parseInt(prompt("Enter the first number"))
+   var n2=parseInt(prompt("Enter the second number"))
+   prompt("the sum of num is",n1+n2)
+   alert(n1+ "+"+n2+"="+(n1+n2))  
+   alert(`${n1} + ${n2} = ${n1+n2}`) 
+   alert("hello")
+       }
+       else{
+           alert("gg")
+       }
+   }
+   function dis()
+   {
+       var d= new Date();
+       if(d.getHours()<12)
+       alert ("morn")
+       else
+       alert("fff")
+   }
+   function temperature(temp)
+   {
+       alert(temp)
+   }
+   function string(){
+       var str= 'hihello'
+       alert(str.length)
+       alert("roshan".indexOf("r"))
+       
+   }
+   function two()
+   {
+       var name="grt"
+       
+       document.write(`your name is\"${name}\"`)//[\"] is for printing double quotes
+   }
+      
+   </script>
+   <body>
+       <input type ="button" value="AddNumbers" onclick="addTwo()">
+       <input type ="button" value="Display" onclick="dis()">
+       <input type ="button" value="roomt" onclick="temperature(32769)"> 
+       <input type ="button" value="string" onclick="string()">
+       <input type ="button" value="string2" onclick="two()">
+
+   </body>  
+  </head>

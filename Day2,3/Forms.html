@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script type="text/javascript">
+        function check(){
+            var uname=(document.getElementById("username").value);//the "username here is the id name of the "text" tag
+            if(uname.length==0){
+                var span3=document.getElementById("s3")
+                span3.innerHTML="Enter"
+            }
+            else{
+            alert("welcome" +uname)
+        }
+        }
+        function add(){
+            var n1=parseInt(document.getElementById("num1").value)//we write parseint orelse the number we type will be taken as string
+            var n2=parseInt(document.getElementById("num2").value)
+            if(n1.length==0 || n2.length==0 ){
+                var span1=document.getElementById("s1")
+                span1.innerHTML="enter number"
+                var span2=document.getElementById("s2")
+                span2.innerHTML="enter number"
+            }
+            else{
+             r= n1+n2
+            alert(r)
+            }
+        }
+        
+        </script>
+    </head>
+    <body>
+        <form>
+            Username:<input type="text" name="username" id="username"><span id="s3"></span><br/>
+            Number 1 :<input type="number" name="num1" id="num1"><span id="s1"></span><br/>
+            Number 2: <input type="number" name ="num2" id="num2"><span id="s2"></span><br/>
+            <input type="button" value="go" onclick="check()">
+            <input type="button" value="Add" onclick="add()">
+        </form>
+    </body>
+</html>
