@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src="jquery-3.4.1.js">
+        </script>
+        <script>
+        $(document).ready(function(){
+         $("button#b1").click(function(){
+             
+             $("p").toggle()
+         })
+         $("button#b2").click(function(){
+             alert("hi")
+         })
+         $("p,h1").dblclick(function(){
+           $(this).hide()//if we give p everything will go click,dblclick
+         })
+         //$("h2").mouseover(function(){
+               //alert("left")
+        // })
+         $('body').bind('copy',function(e){
+              alert("cant cut")
+              e.preventDefault();
+         })
+         $("body").on("contextmenu",function(e){
+             e.preventDefault();//right click options is not displayed or give return false
+
+         })
+        })
+        </script>
+    </head>
+    <body>
+        <p>Paragraph</p>
+        <p>is here</p>
+        <h1>Heloo</h1>
+        <h2>Going down</h2>
+        <button id="b1">check</button>
+        <button id="b2">check</button>
+    </body>
+</html>

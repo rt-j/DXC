@@ -1,0 +1,40 @@
+<html>
+    <head>
+     <script src="jquery-3.4.1.js">
+     </script>
+     <script>
+     $(document).ready(function(){
+         $("input").focus(function(){
+             $(this).css("background-color","green")
+
+         })
+         $("input").blur(function(){
+             $(this).css("background-color","blue")
+     })
+     })
+     </script>
+     <script>
+     $(document).ready(function(){
+         $("#a").click(function(){
+         $("#b").slideToggle(100)
+     })
+     })
+     </script>
+     <style type="text/css">
+     #a,#b{
+       padding:5px;
+       border:5px;
+       border: solid blue;
+     }
+     #b{
+         display: block; /*if we give "none" it will not be displayed*/
+     }
+     </style>
+    </head>
+    <body>
+        Name:<input type="text" name="fullName"></br>
+        Email:<input type="text" name="email">
+        <div id="a">Enopy the slide</div>
+        <div id="b"> sliding</div>
+    </body>
+</html>

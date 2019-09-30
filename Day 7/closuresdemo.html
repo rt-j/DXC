@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script type="text/javascript">
+         function outer(a){
+             function inner(b){
+                 return a+b;
+             }
+             return inner
+         }
+        
+           var a =outer(5);
+           console.log(a(4));
+           console.dir(a)
+           result=(x,y) =>{return x+y}
+           console.log(result(7,7))
+        </script>
+    </head>
+</html>

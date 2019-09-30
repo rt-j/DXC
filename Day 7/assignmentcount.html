@@ -1,0 +1,43 @@
+<html>
+    <head>
+            <script src="jquery-3.4.1.js">
+          </script>
+          <script>
+     $(document).ready(function(){
+         var maxlen=5
+         $("#box").keypress(function(){
+              var len1=$(this).val().length
+              alert(len1)
+              var len=maxlen-len1-1;
+              if(len1<maxlen){
+              var s1=document.getElementById("s1")
+                  s1.innerHTML="you have" +len+"remaining"//$("#spanid").text(maxlen-len)
+              
+              }
+              else{
+                  $(function(){
+                   $("#box").prop("disabled",true)
+
+                  })
+              }
+         })
+
+     })
+
+                </script>
+                
+        <style>
+            #a{
+                padding:5px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form>
+        <div id="a">
+           Enter <input type="text" name="box" id="box" ><span id="s1"></span>
+        </div>
+    </form>
+    </body>
+</html>

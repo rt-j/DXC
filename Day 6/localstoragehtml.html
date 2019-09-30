@@ -1,0 +1,20 @@
+<html>
+    <script type="text/javascript">
+    function setCurrentCity(){
+        var cityName= document.getElementById("cityName").value 
+        localStorage.setItem("cName",cityName)//here cName is variable name and cityName is the value retrieved from prev line
+        
+    }
+    function setCity(){
+        if(localStorage.cName){
+            document.f1.cityName.value=localStorage['cName']
+        }
+    }
+    </script>
+    <body onload="setCity()">
+        <form name ="f1">
+            Citynames<input type="text" name="cityName" id="cityName" >
+            <input type="button" value="set" onclick="setCurrentCity()">
+        </form>
+     </body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+    <head>
+           <!--write different links for different styles-->
+           <link rel="stylesheet" 
+           href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+            <script src="jquery-3.4.1.js"> </script>
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+                <script>
+                var tags=["dog","cat","duck"]
+                $(document).ready(function(){
+                    $("#t").autocomplete({
+                           source:tags
+                    })
+                    $("#a").datepicker();
+                    $("p").draggable();
+
+
+                })
+                $(function(){
+                    $("#n").sortable();
+
+                })
+
+            </script>
+
+
+    </head>
+    <body>
+        <label>Tag</label>
+        <input id="t">
+        Date:<input id="a">
+        
+        <p>Drag me</p>
+        <ol id="n">
+            <li>Hi</li>
+            <li>crow</li>
+            <li>hello</li>
+        </ul>
+    
+    </body>
+
+</html>

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <style>
+        #div1{ width:350px; height:70px; border:1px solid;color:blueviolet}
+        </style>
+        <script>
+        function allowDrop(ev){
+            ev.preventDefault();//this line indicates that the image can be allowed to be dragged..cuz default doesnt allow thatt
+
+        }
+        function drag(ev){
+            ev.dataTransfer.setData("text",ev.target.id)//the second parameter takes the id of the sent image...."text"is the variable name which stores the id which is taken from the second parameter
+        }
+        function drop(ev){
+            var data=ev.dataTransfer.getData("text")
+            ev.target.appendChild(document.getElementById(data))
+        }
+        </script>
+    </head>
+    <body>
+        <p>Drag the image</p>
+        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div></br>
+        <img id="drag1" src="flag.jpg" draggable="true" ondragstart="drag(event)" width="336" height="70">
+        <img id="drag2" src="Ball.jpg" draggable="true" ondragstart="drag(event)" width="336" height="70">
+    </body>
+</html>
