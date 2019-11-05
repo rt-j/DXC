@@ -1,0 +1,239 @@
+-----var hello="WElcome "
+	printjson(hello)
+		O/P:prints Welcome
+-----db.product.insert({"productId":1001,"productName":"Lakme"});
+	For inserting
+-----db.customers.find({balance:{$lt:3000}}).pretty()
+	Find people with balance less than 3000
+-----db.customers.find({'address.state':"Uttar Pradesh"}).count()
+	counting number of people with Uttar
+-----db.customers.find().forEach(function(data){print("Customer Name:"+data.customerName)})
+	Using For loop
+-----db.newcustomers.aggregate([{$group:{_id:"$address.state",OurResult:{$sum:1}}}]);
+	Aggregate Command for grouping
+-----db.newcustomers.update({"customerName":"Mohan"},{$inc:{billAmount:120}});
+	For incrementing billAmount by 120
+-----db.newcustomers.updateMany({},{$rename:{'bilAmount':'billAmount'}})
+	Instead of using true,true
+-----db.newcustomers.updateMany({},{$rename:{'wife':'spouse'}})
+	For renaming
+------ db.newcustomers.update({cust:'Till'},{$set:{spouse:'Sanon'}},true,true)
+	For updating with true or false
+	First true is for upsert and second true is for updateMany(multi)..we can update all the fields with that criteria.
+	criteria is the first curly brace{}
+-----db.students.update({_id:1,grades:80},{$set:{"grades.$":82}},false,true)
+	For updating array:
+	(Only One item it will update,to uodate the next item run this command again)
+-----db.student.updateOne({_id:5,grades:{$elemMatch:{grade:{$lte:90},mean:{$gt:80}}}},{$set:{"grades.$.std":6}})
+	For updating elements in array
+-----db.newcustomers.find({'customerName':{'$regex':'Ka.p.na$'}}).pretty()
+	find name that has anywhere k and ends with na(for beginning with k put ^ )
+-----db.newcustomers.remove({custName:"name"})
+	Remove document which has this name
+-----db.product.updateMany({},{$unset:{quantityOnHand:1}})
+	Removes only quantityOnHand
+					Projections
+
+-----db.newcustomers.find({customerName:"Kalpana"},{emailId:1,_id:0})
+	Display Kalpana's emailId (dont display Id cuz id is zero)
+	if we give emailId as zero then all other details will be displayed
+-----db.newcustomers.find().sort({dob:-1}).pretty()
+	Sorting -1 is for descending
+					Indexing
+
+----mytemp 54>db.mydatas.find({"Emp Id":5})
+		Slow
+----mytemp 54>db.mydatas.findOne({"Emp Id":5})
+		Quick
+---db.mydatas.createIndex({"Emp Id":1})
+	For making find method also fast
+----db.mydatas.stats().indexSizes
+	For getting size og index
+					Export and Import
+
+----mongoexport -d dxcdb -c newcustomers -o allToDoItems.csv
+	Exporting
+----mongoexport -d dxcdb -c newcustomers --type csv -f"customerName" -o newCust.csv
+	Creating "newCust" csv file which contains only the customerName field
+----mongoimport --type csv --headerline -d dxcdb -c banklist --file banklist.csv
+	we are writing headerfile to tell db to create field names when importing into db
+	If we give -q "{balance:{$gt:5000}}" it does only balance which is greater than 5000
+
+					Link b/w two collections
+
+----db.city.insert([{name:"Mumbai"},{name:"Bhopal"}])
+	First enter cities document in 'city' name
+	next enter this code
+		db.customers.insert([{name:"Ram",cityName:db.city.find()[0].name}])
+		this links the two documents
+					
+							
+             **************************Demo*****************************************
+
+
+db.usersData.insert([
+	{
+  "_id": ObjectId("45b83bda421238c76f5c1969"),
+  "name": "Tufail Ahmed",
+  "email": "tufailahmedkhan@gmail.com",
+  "country": "INDIA",
+  "dob": ISODate("1999-09-13T00:00:00.000Z")
+  }
+])
+-----
+db.usersPosts.insert([
+{
+  "user_id": ObjectId("45b83bda421238c76f5c1969"),
+  "date": ISODate("2016-09-05T03:05:00.123Z"),
+  "text": "Your bful eyes, I am in love all over again",
+  "rating" : "important"
+}
+])
+=======
+
+db.usersPosts.aggregate([
+  { "$match": { "rating": "important" } },
+  { "$sort": { "date": -1 } },
+  { "$limit": 2 },
+  { "$lookup": {
+    "localField": "user_id",
+    "from": "usersData",
+    "foreignField": "_id",
+    "as": "myinfo"
+  } },
+  { "$unwind": "$myinfo" },
+  { "$project": {
+    "text": 1,
+    "date": 1,
+    "myinfo.name": 1,
+    "myinfo.country": 1
+  } }
+]);
+
+
+*************************************Finding Duplicates********************************************
+			
+
+db.banklist.aggregate([
+{$group:{
+_id:{CERT:"$CERT"},
+uniqueIds:{$addToSet:"$_id"},
+count:{$sum:1}
+}
+}
+])				
+
+			**************Bulk Operations***********
+
+var bulk = db.mybulkData2.initializeUnorderedBulkOp(),
+    counter = 0; // counter to keep track of the batch update size
+
+db.mybulkData2.find({
+    "salary": { "$exists": true, "$type": 2 },
+    "dob": { "$exists": true, "$type": 2 }
+}).forEach(function(doc){ 
+    var newSalary = parseInt(doc.salary),
+        newDob = new ISODate(doc.dob);
+    bulk.find({ "_id": doc._id }).updateOne({ 
+        "$set": { "salary": newSalary, "dob": newDob }
+    });
+
+    counter++; // increment counter
+    if (counter % 1000 == 0) {
+        bulk.execute(); // Execute per 1000 operations and re-initialize every 1000 update statements
+        bulk = db.mybulkData2.initializeUnorderedBulkOp();
+    }
+});
+ 	
+BackUp:# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+storage:
+  dbPath: C:\Program Files\MongoDB\Server\4.2\data
+  journal:
+    enabled: true
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path:  C:\Program Files\MongoDB\Server\4.2\log\mongod.log
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+
+
+#processManagement:
+
+#security:
+
+#operationProfiling:
+
+#replication:
+
+#sharding:
+
+## Enterprise-Only Options:
+
+#auditLog:
+
+#snmp:
+
+************************************************For giving Password******************************
+   First:
+	mongod --port 9876 --dbpath="C:\Users\rthomas80\Documents\mongodbdemos\data"		
+   Second:In another command prompt
+	mongo -port 9876
+   Third: Create a user
+	db.createUser({user:"R",pwd:"r",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+	mongo --port 9876 -u "R" -p "r"
+	db.createUser({user:"R",pwd:"r",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+
+**********************************************Confusion**********************************
+data
+	config
+		config-a
+		config-b
+		config-c
+
+mongod –replSet cs –logpath "cfg-a.log" –dbpath data\config\config-a –port 57040 –configsvr 
+mongod –replSet cs –logpath "cfg-b.log" –dbpath data\config\config-b –port 57041 –configsvr
+mongod –replSet cs –logpath "cfg-c.log" –dbpath data\config\config-c –port 57042 –configsvr
+
+And add thereafter these lines:
+
+
+mongo –port 57040 
+config = { _id: "cs", members:[
+{ _id : 0, host : "localhost:57040" },
+{ _id : 1, host : "localhost:57041" },
+{ _id : 2, host : "localhost:57042" }]};
+
+rs.initiate(config)
+
+
+create folder shard2
+	shard2/rs0
+	shard2/rs1
+	shard1/rs2
+
+mongod --replSet s2 --logpath "s2-r0.log" --dbpath data\shard2\rs0 --port 57017 --shardsvr
+mongod --replSet s2 --logpath "s2-r1.log" --dbpath data\shard2\rs1 --port 57018 --shardsvr
+mongod --replSet s2 --logpath "s2-r2.log" --dbpath data\shard2\rs2 --port 57019 --shardsvr
+
+mongo --port 57017 
+
+config = { _id: "s2", members:[
+          { _id : 0, host : "localhost:57017" },
+          { _id : 1, host : "localhost:57018" },
+          { _id : 2, host : "localhost:57019" }]};
+rs.initiate(config)
